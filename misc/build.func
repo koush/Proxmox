@@ -500,7 +500,7 @@ build_container() {
     "
   fi
 
-  export PCT_OPTIONS="$PCT_OPTINS
+  export PCT_OPTIONS="$PCT_OPTIONS
     -features $FEATURES
     -hostname $HN
     -tags proxmox-helper-scripts

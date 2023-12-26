@@ -21,7 +21,7 @@ EOF
 header_info
 echo -e "Loading..."
 APP="Scrypted"
-var_disk="8"
+var_disk="16"
 var_cpu=""
 var_ram="8192"
 var_os="ubuntu"
