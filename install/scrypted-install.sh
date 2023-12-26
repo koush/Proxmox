@@ -17,7 +17,7 @@ msg_info "Installing Dependencies (Patience)"
 $STD apt-get -y install software-properties-common apt-utils
 $STD apt-get -y update
 $STD apt-get -y upgrade
-$STD apt-get install -y avahi-daemon
+$STD apt-get install -y avahi-daemon curl
 
 $STD curl -s https://raw.githubusercontent.com/koush/scrypted/main/install/local/install-scrypted-dependencies-linux.sh | SERVICE_USER=$USER $STD bash
 
