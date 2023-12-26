@@ -2,6 +2,9 @@ variables() {
   NSAPP=$(echo ${APP,,} | tr -d ' ') # This function sets the NSAPP variable by converting the value of the APP variable to lowercase and removing any spaces.
   var_install="${NSAPP}-install"     # sets the var_install variable by appending "-install" to the value of NSAPP.
   INTEGER='^[0-9]+([.][0-9]+)?$'     # it defines the INTEGER regular expression pattern.
+  if [ -z "$SCRIPTS_BASE_URL" ]; then
+    SCRIPTS_BASE_URL="https://raw.githubusercontent.com/tteck/Proxmox/main"
+  fi
 }
 
 # This function sets various color variables using ANSI escape codes for formatting text in the terminal.
@@ -473,9 +476,9 @@ build_container() {
   TEMP_DIR=$(mktemp -d)
   pushd $TEMP_DIR >/dev/null
   if [ "$var_os" == "alpine" ]; then
-    export FUNCTIONS_FILE_PATH="$(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/alpine-install.func)"
+    export FUNCTIONS_FILE_PATH="$(curl -s $SCRIPTS_BASE_URL/misc/alpine-install.func)"
   else
-    export FUNCTIONS_FILE_PATH="$(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/install.func)"
+    export FUNCTIONS_FILE_PATH="$(curl -s $SCRIPTS_BASE_URL/misc/install.func)"
   fi
   export tz="$timezone"
   export DISABLEIPV6="$DISABLEIP6"
@@ -510,7 +513,7 @@ build_container() {
     $PW
   "
   # This executes create_lxc.sh and creates the container and .conf file
-  bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/create_lxc.sh)" || exit
+  bash -c "$(wget -qLO - $SCRIPTS_BASE_URL/ct/create_lxc.sh)" || exit
 
   LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
   if [ "$CT_TYPE" == "0" ]; then
@@ -550,14 +553,14 @@ EOF
     sleep 2
     pct exec "$CTID" -- ash -c "apk add bash >/dev/null"
   fi
-  lxc-attach -n "$CTID" -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/install/$var_install.sh)" || exit
+  lxc-attach -n "$CTID" -- bash -c "$(wget -qLO - $SCRIPTS_BASE_URL/install/$var_install.sh)" || exit
 
 }
 
 # This function sets the description of the container.
 description() {
   IP=$(pct exec "$CTID" ip a s dev eth0 | awk '/inet / {print $2}' | cut -d/ -f1)
-  pct set "$CTID" -description "<div align='center'><a href='https://Helper-Scripts.com'><img src='https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/logo-81x112.png'/></a>
+  pct set "$CTID" -description "<div align='center'><a href='https://Helper-Scripts.com'><img src='$SCRIPTS_BASE_URL/misc/images/logo-81x112.png'/></a>
 
   # ${APP} LXC
 

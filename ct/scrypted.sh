@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build.func)
+export SCRIPTS_BASE_URL="https://raw.githubusercontent.com/koush/Proxmox/main"
+source <(curl -s $SCRIPTS_BASE_URL/misc/build.func)
 # Copyright (c) 2021-2023 tteck
 # Author: tteck (tteckster)
 # License: MIT
