@@ -19,7 +19,7 @@ $STD apt-get -y update
 $STD apt-get -y upgrade
 $STD apt-get install -y avahi-daemon
 
-$STD curl -s https://raw.githubusercontent.com/koush/scrypted/main/install/local/install-scrypted-dependencies-linux.sh | sudo SERVICE_USER=$USER $STD bash
+$STD curl -s https://raw.githubusercontent.com/koush/scrypted/main/install/local/install-scrypted-dependencies-linux.sh | SERVICE_USER=$USER $STD bash
 
 motd_ssh
 customize
