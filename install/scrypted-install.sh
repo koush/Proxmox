@@ -24,6 +24,7 @@ $STD cd ~/.scrypted
 $STD curl -O -L https://raw.githubusercontent.com/koush/scrypted/main/install/local/install-scrypted-dependencies-linux.sh
 export SERVICE_USER=$USER 
 export SERVICE_USER_ROOT=true
+export SERVICE_CONTAINER=true
 $STD chmod +x install-scrypted-dependencies-linux.sh
 $STD ./install-scrypted-dependencies-linux.sh
 
